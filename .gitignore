@@ -1,0 +1,8 @@
+Library/
+obj/
+ProjectSettings/
+Temp/
+Assembly-CSharp.csproj
+TerrainGenerationTest.sln
+TerrainGenerationTest.userprefs
+*.meta
