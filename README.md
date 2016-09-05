@@ -2,7 +2,7 @@ Diamond-Square Terrain Generator
 ============================
 **Diamond - Square Terrain Generator** is [Unity3D](https://unity3d.com/) game/program that generates random heightmaps based on seed and size using [Diamond-Square algorith](https://en.wikipedia.org/wiki/Diamond-square_algorithm).
 
-This prototype was created for my computer game [Project GLIF].(https://github.com/Tomcus/GLIF)
+This prototype was created for my computer game [Project GLIF](https://github.com/Tomcus/GLIF).
 
 About Author
 ---------------------
