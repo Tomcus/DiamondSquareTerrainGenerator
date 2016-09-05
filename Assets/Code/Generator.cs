@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 
-namespace Terrain{
+namespace TerrainGen{
 	public class Generator : MonoBehaviour {
 		public int maxExponent = 12;
 		public float speed = 40f;
@@ -45,7 +45,7 @@ namespace Terrain{
 			generateTerain ();
 			c.gameObject.SetActive (false);
 			r.gameObject.SetActive (true);
-			Camera.main.transform.position = new Vector3 (-38f, getMaxCorner(), length/2f);
+			Camera.main.transform.position = new Vector3 (length, Tile.maxHeight, length);
 		}
 
 		private void generateTerain(){
@@ -55,7 +55,7 @@ namespace Terrain{
 			nullTheWorld ();
 			prepareTiles ();
 			doDiamondSquare ();
-			transform.position = new Vector3 (length / 2f, 0, length / 2f);
+			transform.position = new Vector3 (length, 0, length);
 			createWorld ();
 		}
 
@@ -93,7 +93,7 @@ namespace Terrain{
 			snapValues = newValue;
 		}
 		public void onRotationChange(float newValue){
-			transform.eulerAngles = new Vector3 (0, newValue * 360f, 0);
+			Camera.main.transform.eulerAngles = new Vector3 (17f, newValue * 360f, 0);
 		}
 		public void onLinkClicked(){
 			Application.OpenURL ("");
@@ -132,12 +132,22 @@ namespace Terrain{
 		}
 
 		private void createWorld(){
+			TerrainData td;
+			float height = Tile.maxHeight - Tile.minHeight;
+			float[,] heightMap = new float[length, length];
+			Debug.Log (height);
 			for (int x = 0; x < length; x++)
 				for (int y = 0; y < length; y++) {
-					GameObject go = (GameObject)Instantiate (cube, world [x, y].getPosition (snapValues), Quaternion.identity);
-					go.name = "Tile_" + x + "_" + y;
-					go.transform.SetParent (transform);
+					heightMap [y, x] = world [x, y].getPosition (height);
 				}
+			td = new TerrainData ();
+			Debug.Log (2f * (length - 1));
+			td.heightmapResolution = length;
+			td.size = new Vector3 (2f * (length - 1), height, 2f * (length - 1));
+			td.SetHeights (0, 0, heightMap);
+			GameObject trn = Terrain.CreateTerrainGameObject (td);
+			trn.transform.position = Vector3.zero;
+			trn.transform.SetParent (transform);
 		}
 	}
 }

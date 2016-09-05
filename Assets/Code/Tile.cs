@@ -3,7 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Terrain{
+namespace TerrainGen{
 	public class Tile {
 		private float height;
 		private int worldSize;
@@ -11,6 +11,8 @@ namespace Terrain{
 		private Tile [,] world;
 		public int x, y;
 		public static System.Random rnd = new System.Random ();
+		public static float maxHeight = 0;
+		public static float minHeight = 0;
 
 		public Tile(int x, int y, Tile[,] world, int ws){
 			parrents = new List<Tile> ();
@@ -75,6 +77,10 @@ namespace Terrain{
 			float randAdd = ((float)rnd.NextDouble () * 2 * randRadius) - randRadius;
 			avg += randAdd * radius;
 			height = avg;
+			if (height > maxHeight)
+				maxHeight = height;
+			if (height < minHeight)
+				minHeight = height;
 		}
 
 		public void addParrent(Tile t){
@@ -104,6 +110,9 @@ namespace Terrain{
 			if (floorVal)
 				return new Vector3 ((float)x, Mathf.Floor(height), (float)y);
 			return new Vector3 ((float)x, height, (float)y);
+		}
+		public float getPosition(float mHeight){
+			return (height - minHeight) / mHeight;
 		}
 	}
 }

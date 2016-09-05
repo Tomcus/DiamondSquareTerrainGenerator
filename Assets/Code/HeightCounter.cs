@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Terrain{
+namespace TerrainGen{
 	public class HeightCounter {
 		private List<Tile> newTiles;
 		private int len;
