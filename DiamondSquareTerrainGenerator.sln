@@ -1,0 +1,23 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{9885FE33-8586-91EA-FD3F-8A13A50EE8C7}") = "DiamondSquareTerrainGenerator", "Assembly-CSharp.csproj", "{3F57A9FD-916B-180B-BA2D-1638686ADCEB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3F57A9FD-916B-180B-BA2D-1638686ADCEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F57A9FD-916B-180B-BA2D-1638686ADCEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F57A9FD-916B-180B-BA2D-1638686ADCEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F57A9FD-916B-180B-BA2D-1638686ADCEB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal

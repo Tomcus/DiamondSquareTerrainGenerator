@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Terrain{
 	public class Generator : MonoBehaviour {
@@ -22,10 +23,7 @@ namespace Terrain{
 		private int length;
 		private float rot;
 		private List<Tile> existingTiles = new List<Tile> ();
-
-		void Start(){
-			//prepareScene ();
-		}
+		private List<Tile> newTiles = new List<Tile> ();
 
 		private float getMaxCorner(){
 			float max = leftTopHeight;
@@ -103,16 +101,19 @@ namespace Terrain{
 
 		private void doDiamondSquare(){
 			int len = length;
+			HeightCounter hc = null;
+			Thread countingThread = null;
 			while (len > 1) {
 				len /= 2;
 				// Diamond
-				List<Tile> newTiles = new List<Tile> ();
+				newTiles = new List<Tile> ();
 				foreach (Tile t in existingTiles) {
 					newTiles.AddRange(t.doDiamond (len));
 				}
-				foreach (Tile t in newTiles){
-					t.generateHeigth (len, randElement);
-				}
+				while (countingThread != null && hc != null && countingThread.IsAlive && hc.isRunning );
+				hc = new HeightCounter (newTiles, len, randElement);
+				countingThread = new Thread (new ThreadStart(hc.countHeights));
+				countingThread.Start ();
 				existingTiles.AddRange (newTiles);
 				Debug.Log ("Generated: " + existingTiles.Count);
 				// Square
@@ -120,13 +121,14 @@ namespace Terrain{
 				foreach (Tile t in existingTiles) {
 					newTiles.AddRange(t.doSquare (len));
 				}
-				foreach (Tile t in newTiles){
-					t.generateHeigth (len, randElement);
-				}
+				while (countingThread != null && hc != null && countingThread.IsAlive && hc.isRunning );
+				hc = new HeightCounter (newTiles, len, randElement);
+				countingThread = new Thread (new ThreadStart(hc.countHeights));
+				countingThread.Start ();
 				existingTiles.AddRange (newTiles);
 				Debug.Log ("Generated: " + existingTiles.Count);
 			}
-			
+			while (countingThread != null && hc != null && countingThread.IsAlive && hc.isRunning );
 		}
 
 		private void createWorld(){
